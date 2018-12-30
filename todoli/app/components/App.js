@@ -7,7 +7,7 @@ import { WHITE_SMOKE } from '../constants/colors'
 import { PADDING } from '../constants/dimensions'
 import Input from '../containers/Input'
 
-const App = ({ todos }) => {
+const App = ({ deleteTodo, todos, toggleTodo }) => {
   return (
     <View style={{
       alignItems: 'stretch',
@@ -28,7 +28,12 @@ const App = ({ todos }) => {
       <ScrollView>
         {todos.map((todo) => {
           return (
-            <Todo done={todo.done} title={todo.title} />
+            <Todo
+              deleteTodo={deleteTodo}
+              key={todo.id}
+              todo={todo}
+              toggleTodo={toggleTodo}
+            />
           )
         })}
       </ScrollView>

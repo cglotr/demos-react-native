@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { deleteTodo, toggleTodo } from '../actions'
 import App from '../components/App'
 
 const mapStateToProps = ({ todos }) => {
@@ -7,4 +8,11 @@ const mapStateToProps = ({ todos }) => {
   }
 }
 
-export default connect(mapStateToProps)(App)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteTodo: (id) => dispatch(deleteTodo(id)),
+    toggleTodo: (id) => dispatch(toggleTodo(id))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
