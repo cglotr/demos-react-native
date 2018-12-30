@@ -1,5 +1,10 @@
 import moment from 'moment'
-import { ADD_TODO, DELETE_TODO, TOGGLE_TODO } from '../actions'
+import {
+  ADD_TODO,
+  DELETE_CHECKED_TODOS,
+  DELETE_TODO,
+  TOGGLE_TODO
+} from '../actions'
 
 const initialState = []
 
@@ -14,6 +19,11 @@ const todos = (state = initialState, action) => {
         },
         ...state
       ]
+    }
+    case DELETE_CHECKED_TODOS: {
+      return state.filter((todo) => {
+        return !todo.checked
+      })
     }
     case DELETE_TODO: {
       if (!action.payload || !action.payload.id) return state

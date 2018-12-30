@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { deleteTodo, toggleTodo } from '../actions'
+import { deleteCheckedTodos, deleteTodo, toggleTodo } from '../actions'
 import App from '../components/App'
 
 const mapStateToProps = ({ todos }) => {
@@ -10,6 +10,7 @@ const mapStateToProps = ({ todos }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    deleteCheckedTodos: () => dispatch(deleteCheckedTodos()),
     deleteTodo: (id) => dispatch(deleteTodo(id)),
     toggleTodo: (id) => dispatch(toggleTodo(id))
   }

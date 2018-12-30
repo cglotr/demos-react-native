@@ -1,14 +1,15 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Button, View } from 'react-native'
 import { GOOGLE_RED } from '../constants/colors'
 
-const Footer = () => {
+const Footer = ({ deleteCheckedTodos }) => {
   return (
-    <View style={{
-      paddingBottom: 8,
-      paddingTop: 8
-    }}>
-      <Text style={{ color: GOOGLE_RED }}>TODO: Remove completed item.</Text>
+    <View>
+      <Button
+        color={GOOGLE_RED}
+        onPress={() => { deleteCheckedTodos() }}
+        title='Remove completed todos'
+      />
     </View>
   )
 }

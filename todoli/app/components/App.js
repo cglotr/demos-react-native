@@ -6,7 +6,7 @@ import Todo from './Todo'
 import { PADDING } from '../constants/dimensions'
 import Input from '../containers/Input'
 
-const App = ({ deleteTodo, todos, toggleTodo }) => {
+const App = ({ deleteCheckedTodos, deleteTodo, todos, toggleTodo }) => {
   return (
     <View style={{
       alignItems: 'stretch',
@@ -22,22 +22,29 @@ const App = ({ deleteTodo, todos, toggleTodo }) => {
       }}>
         <Input />
       </View>
-      <ScrollView>
-        {todos.map((todo) => {
-          return (
-            <Todo
-              deleteTodo={deleteTodo}
-              key={todo.id}
-              todo={todo}
-              toggleTodo={toggleTodo}
-            />
-          )
-        })}
-      </ScrollView>
       <View style={{
-        alignItems: 'center'
+        flex: 1,
+        paddingBottom: PADDING,
+        paddingTop: PADDING
       }}>
-        <Footer />
+        <ScrollView>
+          {todos.map((todo) => {
+            return (
+              <Todo
+                deleteTodo={deleteTodo}
+                key={todo.id}
+                todo={todo}
+                toggleTodo={toggleTodo}
+              />
+            )
+          })}
+        </ScrollView>
+      </View>
+      <View style={{
+        alignItems: 'center',
+        paddingBottom: PADDING * 2
+      }}>
+        <Footer deleteCheckedTodos={deleteCheckedTodos} />
       </View>
     </View>
   )
