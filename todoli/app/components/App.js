@@ -3,7 +3,6 @@ import { ScrollView, View } from 'react-native'
 import Footer from './Footer'
 import Title from './Title'
 import Todo from './Todo'
-import { WHITE_SMOKE } from '../constants/colors'
 import { PADDING } from '../constants/dimensions'
 import Input from '../containers/Input'
 
@@ -19,9 +18,7 @@ const App = ({ deleteTodo, todos, toggleTodo }) => {
         <Title />
       </View>
       <View style={{
-        backgroundColor: WHITE_SMOKE,
-        paddingLeft: PADDING,
-        paddingRight: PADDING
+        alignItems: 'center'
       }}>
         <Input />
       </View>

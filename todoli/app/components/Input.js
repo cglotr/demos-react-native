@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { TextInput } from 'react-native'
+import { Input } from 'react-native-elements'
 
-class Input extends Component {
+export default class extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -20,15 +20,15 @@ class Input extends Component {
 
   render () {
     return (
-      <TextInput
+      <Input
+        inputStyle={{
+          marginLeft: 0
+        }}
         onChangeText={this.handleChangeText}
         onSubmitEditing={this.handleSubmitEditing}
-        style={{
-        }}
+        placeholder='Add a todo!'
         value={this.state.title}
       />
     )
   }
 }
-
-export default Input
