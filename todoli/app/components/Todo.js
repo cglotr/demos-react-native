@@ -13,7 +13,7 @@ const Todo = ({ deleteTodo, todo, toggleTodo }) => {
     }}>
       <View>
         <CheckBox
-          checked={todo.done}
+          checked={todo.checked}
           onPress={() => toggleTodo(todo.id)}
         />
       </View>

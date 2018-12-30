@@ -8,8 +8,8 @@ const todos = (state = initialState, action) => {
     case ADD_TODO: {
       return [
         {
+          checked: false,
           id: moment(),
-          done: false,
           title: action.payload.title
         },
         ...state
@@ -33,7 +33,7 @@ const todos = (state = initialState, action) => {
         if (todo.id !== id) return todo
 
         return Object.assign({}, todo, {
-          done: !todo.done
+          checked: !todo.checked
         })
       })
     }
