@@ -1,21 +1,15 @@
 import React, { Component } from 'react'
-import { ScrollView, View } from 'react-native'
-import Footer from './components/Footer'
-import Title from './components/Title'
+import { Provider, connect } from 'react-redux'
+import { createStore } from 'redux'
+import App from './app/containers/App'
+import rootReducer from './app/reducers'
 
-class App extends Component {
-  render () {
-    return (
-      <View style={{
-        alignItems: 'center',
-        flex: 1
-      }}>
-        <Title />
-        <ScrollView></ScrollView>
-        <Footer />
-      </View>
-    )
-  }
+const store = createStore(rootReducer)
+
+export default () => {
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  )
 }
-
-export default App
