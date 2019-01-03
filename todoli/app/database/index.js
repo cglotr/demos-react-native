@@ -16,8 +16,22 @@ export const close = () => {
     })
 }
 
+export const createTodo = (title) => {
+  open()
+    .then((db) => {
+      return db.executeSql('INSERT INTO todo (title) VALUES (?)', [title])
+    })
+    .then(([results]) => {
+      info(TAG, 'Created a new todo.')
+      info(TAG, 'results', results)
+    })
+    .finally(() => {
+      close()
+    })
+}
+
 export const open = async () => {
-  if (database) return Promise.reject(new Error())
+  if (database) return Promise.resolve(database)
 
   SQLite.DEBUG(true)
   SQLite.enablePromise(true)
@@ -35,5 +49,6 @@ export const open = async () => {
         `)
       })
       info(TAG, 'Database opened.')
+      return database
     })
 }
