@@ -1,21 +1,31 @@
-import moment from 'moment'
 import {
   ADD_TODO,
   DELETE_CHECKED_TODOS,
   DELETE_TODO,
   TOGGLE_TODO
 } from '../actions'
+import { info } from '../utils/logger'
+
+const TAG = 'REDUCER:TODOS'
 
 const initialState = []
 
 const todos = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TODO: {
+      const todo = action.payload.todo
+
+      const id = todo.id
+      const title = todo.title
+      const checked = todo.checked
+
+      info(TAG, ADD_TODO, 'id:', id, 'title:', title, 'checked:', checked)
+
       return [
         {
-          checked: false,
-          id: moment(),
-          title: action.payload.title
+          id,
+          title,
+          checked
         },
         ...state
       ]

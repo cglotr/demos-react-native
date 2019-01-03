@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "jest-serializer": "^23.0.1",
-    "moment": "^2.23.0",
     "react": "16.6.1",
     "react-native": "0.57.7",
     "react-native-elements": "^1.0.0-beta7",

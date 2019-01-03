@@ -16,16 +16,42 @@ export const close = () => {
     })
 }
 
-export const createTodo = (title) => {
-  open()
-    .then((db) => {
-      return db.executeSql('INSERT INTO todo (title) VALUES (?)', [title])
+export const createTodo = async (title) => {
+  return open()
+    .then(() => {
+      return database.executeSql('INSERT INTO todo (title) VALUES (?);', [title])
     })
     .then(([results]) => {
       info(TAG, 'Created a new todo.')
-      info(TAG, 'results', results)
+      return results.insertId
     })
-    .finally(() => {
+    .then((id) => {
+      info(TAG, 'Finding a todo with id =', id + '...')
+      return database.executeSql('SELECT * FROM todo WHERE id = ?;', [id])
+    })
+    .then(([results]) => {
+      const todo = results.rows.item(0)
+      info(TAG, 'Found todo with id =', todo.id + '!')
+      return todo
+    })
+    .then((todo) => {
+      info(TAG, 'Closing DB...')
+      close()
+
+      const id = todo.id
+      const title = todo.title
+      const checked = !!todo.checked
+
+      info(TAG, 'Returning todo...')
+      info(TAG, 'todo:', todo)
+
+      return {
+        id,
+        title,
+        checked
+      }
+    })
+    .catch(() => {
       close()
     })
 }

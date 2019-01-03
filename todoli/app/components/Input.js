@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Input } from 'react-native-elements'
+import { createTodo } from '../database'
 
 export default class extends Component {
   constructor (props) {
@@ -14,8 +15,11 @@ export default class extends Component {
   }
 
   handleSubmitEditing = () => {
-    this.props.addTodo(this.state.title)
-    this.setState({ title: '' })
+    createTodo(this.state.title)
+      .then((todo) => {
+        this.props.addTodo(todo)
+        this.setState({ title: '' })
+      })
   }
 
   render () {
