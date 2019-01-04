@@ -5,8 +5,18 @@ import Title from './Title'
 import Todo from './Todo'
 import { PADDING } from '../constants/dimensions'
 import Input from '../containers/Input'
+import { getAllTodos } from '../database'
 
 export default class extends Component {
+  componentDidMount () {
+    const { resetTodos } = this.props
+
+    getAllTodos()
+      .then((todos) => {
+        resetTodos(todos)
+      })
+  }
+
   render () {
     const { deleteCheckedTodos, deleteTodo, todos, toggleTodo } = this.props
 

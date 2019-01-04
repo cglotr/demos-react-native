@@ -7,7 +7,12 @@ const TAG = 'DB'
 let database
 
 export const close = () => {
-  if (!database) return Promise.reject(new Error())
+  info(TAG, 'Closing DB...')
+
+  if (!database) {
+    info(TAG, "Can't find DB!")
+    return
+  }
 
   return database.close()
     .then(() => {
@@ -35,7 +40,6 @@ export const createTodo = async (title) => {
       return todo
     })
     .then((todo) => {
-      info(TAG, 'Closing DB...')
       close()
 
       const id = todo.id
@@ -50,6 +54,42 @@ export const createTodo = async (title) => {
         title,
         checked
       }
+    })
+    .catch(() => {
+      close()
+    })
+}
+
+export const getAllTodos = async () => {
+  return open()
+    .then((db) => {
+      info(TAG, 'Finding all todos...')
+      return db.executeSql(`SELECT * FROM todo;`)
+    })
+    .then(([results]) => {
+      const len = results.rows.length
+      info(TAG, `Found ${len} todo(s)`)
+
+      const todos = []
+
+      for (let i = 0; i < len; i++) {
+        const raw = results.rows.item(i)
+
+        const id = raw.id
+        const title = raw.title
+        const checked = !!raw.checked
+
+        todos.push({
+          id,
+          title,
+          checked
+        })
+      }
+
+      info(TAG, 'todos:', todos)
+      close()
+
+      return todos
     })
     .catch(() => {
       close()

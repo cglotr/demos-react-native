@@ -2,6 +2,7 @@ import {
   ADD_TODO,
   DELETE_CHECKED_TODOS,
   DELETE_TODO,
+  RESET_TODOS,
   TOGGLE_TODO
 } from '../actions'
 import { info } from '../utils/logger'
@@ -43,6 +44,11 @@ const todos = (state = initialState, action) => {
       return state.filter((todo) => {
         return todo.id !== id
       })
+    }
+    case RESET_TODOS: {
+      const todos = action.payload.todos
+
+      return todos.map(todo => todo)
     }
     case TOGGLE_TODO: {
       if (!action.payload || !action.payload.id) return state
