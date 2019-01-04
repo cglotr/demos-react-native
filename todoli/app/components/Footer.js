@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { Button, View } from 'react-native'
 import { GOOGLE_BLUE, GOOGLE_YELLOW } from '../constants/colors'
@@ -14,6 +15,11 @@ const Footer = ({ checkedVisibility, toggleCheckedVisibility }) => {
       />
     </View>
   )
+}
+
+Footer.propTypes = {
+  checkedVisibility: PropTypes.bool.isRequired,
+  toggleCheckedVisibility: PropTypes.func.isRequired
 }
 
 export default Footer
