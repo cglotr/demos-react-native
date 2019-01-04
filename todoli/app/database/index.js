@@ -1,5 +1,5 @@
 import SQLite from 'react-native-sqlite-storage'
-import { info } from '../utils/logger'
+import { info, warn } from '../utils/logger'
 import { DATABASE } from '../../config'
 
 const TAG = 'DB'
@@ -42,6 +42,21 @@ export const createTodo = async (title) => {
     })
     .catch(() => {
       close()
+    })
+}
+
+export const deleteTodo = async (id) => {
+  return open()
+    .then((db) => {
+      return db.executeSql(`DELETE FROM todo WHERE id = ?;`, [id])
+    })
+    .then(() => {
+      return id
+    })
+    .catch(() => {
+      close()
+      warn(TAG, 'Delete todo failed!')
+      warn(TAG, 'Todo id =', id + '.')
     })
 }
 

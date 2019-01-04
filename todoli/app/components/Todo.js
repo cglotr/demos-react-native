@@ -1,10 +1,18 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 import { CheckBox, Icon } from 'react-native-elements'
+import { deleteTodo as dbDeleteTodo } from '../database'
 
 const ALIGN_PADDING = 3
 
 const Todo = ({ deleteTodo, todo, toggleTodo }) => {
+  const handleDeletePress = (id) => {
+    dbDeleteTodo(id)
+      .then((id) => {
+        deleteTodo(id)
+      })
+  }
+
   return (
     <View style={{
       alignItems: 'center',
@@ -28,7 +36,7 @@ const Todo = ({ deleteTodo, todo, toggleTodo }) => {
       }}>
         <Icon
           name='delete-outline'
-          onPress={() => deleteTodo(todo.id)}
+          onPress={() => handleDeletePress(todo.id)}
           type='material-community'
         />
       </View>
