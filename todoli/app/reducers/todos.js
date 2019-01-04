@@ -1,6 +1,5 @@
 import {
   ADD_TODO,
-  DELETE_CHECKED_TODOS,
   DELETE_TODO,
   RESET_TODOS,
   TOGGLE_TODO
@@ -30,11 +29,6 @@ const todos = (state = initialState, action) => {
         },
         ...state
       ]
-    }
-    case DELETE_CHECKED_TODOS: {
-      return state.filter((todo) => {
-        return !todo.checked
-      })
     }
     case DELETE_TODO: {
       if (!action.payload || !action.payload.id) return state
