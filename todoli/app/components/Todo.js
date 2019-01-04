@@ -1,6 +1,7 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 import { CheckBox, Icon } from 'react-native-elements'
+import { PADDING } from '../constants/dimensions'
 import {
   deleteTodo as dbDeleteTodo,
   setTodoChecked
@@ -29,7 +30,7 @@ const Todo = ({ deleteTodo, todo, toggleTodo }) => {
     <View style={{
       alignItems: 'center',
       flexDirection: 'row',
-      padding: 8
+      padding: PADDING
     }}>
       <View>
         <CheckBox
