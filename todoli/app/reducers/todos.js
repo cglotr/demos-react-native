@@ -4,31 +4,46 @@ import {
   RESET_TODOS,
   TOGGLE_TODO
 } from '../actions'
-import { info } from '../utils/logger'
+import { warn } from '../utils/logger'
 
 const TAG = 'REDUCER:TODOS'
 
-const initialState = []
+const init = []
 
-const todos = (state = initialState, action) => {
+const constructTodo = (id, title, checked) => {
+  if (!id || !title || (checked !== true && checked !== false)) {
+    return null
+  }
+
+  return {
+    id,
+    title,
+    checked
+  }
+}
+
+const todos = (state = init, action) => {
   switch (action.type) {
     case ADD_TODO: {
       const todo = action.payload.todo
 
+      if (!todo) {
+        warn(TAG, 'Missing todo in payload!')
+        return state
+      }
+
+      const checked = todo.checked
       const id = todo.id
       const title = todo.title
-      const checked = todo.checked
 
-      info(TAG, ADD_TODO, 'id:', id, 'title:', title, 'checked:', checked)
+      const obj = constructTodo(id, title, checked)
 
-      return [
-        {
-          id,
-          title,
-          checked
-        },
-        ...state
-      ]
+      if (!obj) {
+        warn(TAG, 'Failed to construct todo!')
+        return state
+      }
+
+      return [ obj, ...state ]
     }
     case DELETE_TODO: {
       if (!action.payload || !action.payload.id) return state
