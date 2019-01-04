@@ -1,11 +1,23 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 import { CheckBox, Icon } from 'react-native-elements'
-import { deleteTodo as dbDeleteTodo } from '../database'
+import {
+  deleteTodo as dbDeleteTodo,
+  setTodoChecked
+} from '../database'
 
 const ALIGN_PADDING = 3
 
 const Todo = ({ deleteTodo, todo, toggleTodo }) => {
+  const handleCheckedPress = (id, checked) => {
+    setTodoChecked(id, checked)
+      .then(() => {
+        if (checked !== todo.checked) {
+          toggleTodo(id)
+        }
+      })
+  }
+
   const handleDeletePress = (id) => {
     dbDeleteTodo(id)
       .then((id) => {
@@ -22,7 +34,7 @@ const Todo = ({ deleteTodo, todo, toggleTodo }) => {
       <View>
         <CheckBox
           checked={todo.checked}
-          onPress={() => toggleTodo(todo.id)}
+          onPress={() => handleCheckedPress(todo.id, !todo.checked)}
         />
       </View>
       <View style={{

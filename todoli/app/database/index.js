@@ -96,6 +96,25 @@ export const getAllTodos = async () => {
     })
 }
 
+export const setTodoChecked = async (id, checked) => {
+  return open()
+    .then((db) => {
+      return db.executeSql(`UPDATE todo SET checked = ? WHERE id = ?;`, [checked, id])
+    })
+    .then(([results]) => {
+      const rowsAffected = results.rowsAffected
+
+      if (rowsAffected !== 1) {
+        return Promise.reject(new Error())
+      }
+    })
+    .catch(() => {
+      close()
+      warn(TAG, 'Set todo checked state failed!')
+      warn(TAG, 'Todo ID =', id + '.')
+    })
+}
+
 const close = () => {
   info(TAG, 'Closing DB...')
 
