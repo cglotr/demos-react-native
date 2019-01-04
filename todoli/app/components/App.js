@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { ScrollView, View } from 'react-native'
 import Footer from './Footer'
@@ -7,7 +8,7 @@ import { PADDING } from '../constants/dimensions'
 import Input from '../containers/Input'
 import { getAllTodos } from '../database'
 
-export default class extends Component {
+class App extends Component {
   componentDidMount () {
     const { resetTodos } = this.props
 
@@ -76,3 +77,18 @@ export default class extends Component {
     )
   }
 }
+
+App.propTypes = {
+  checkedVisibility: PropTypes.bool.isRequired,
+  deleteTodo: PropTypes.func.isRequired,
+  resetTodos: PropTypes.func.isRequired,
+  todos: PropTypes.arrayOf(PropTypes.shape({
+    checked: PropTypes.bool.isRequired,
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired
+  })),
+  toggleCheckedVisibility: PropTypes.func.isRequired,
+  toggleTodo: PropTypes.func.isRequired
+}
+
+export default App
