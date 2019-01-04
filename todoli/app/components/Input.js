@@ -1,13 +1,11 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { Input } from 'react-native-elements'
+import { Input as EInput } from 'react-native-elements'
 import { createTodo } from '../database'
 
-export default class extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      title: ''
-    }
+class Input extends Component {
+  state = {
+    title: ''
   }
 
   handleChangeText = (title) => {
@@ -15,16 +13,19 @@ export default class extends Component {
   }
 
   handleSubmitEditing = () => {
-    createTodo(this.state.title)
+    const { addTodo } = this.props
+    const { title } = this.state
+
+    createTodo(title)
       .then((todo) => {
-        this.props.addTodo(todo)
+        addTodo(todo)
         this.setState({ title: '' })
       })
   }
 
   render () {
     return (
-      <Input
+      <EInput
         inputStyle={{
           marginLeft: 0
         }}
@@ -36,3 +37,9 @@ export default class extends Component {
     )
   }
 }
+
+Input.propTypes = {
+  addTodo: PropTypes.func.isRequired
+}
+
+export default Input
