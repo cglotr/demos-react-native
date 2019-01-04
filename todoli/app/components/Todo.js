@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { Text, View } from 'react-native'
 import { CheckBox, Icon } from 'react-native-elements'
@@ -55,6 +56,16 @@ const Todo = ({ deleteTodo, todo, toggleTodo }) => {
       </View>
     </View>
   )
+}
+
+Todo.propTypes = {
+  deleteTodo: PropTypes.func.isRequired,
+  todo: PropTypes.shape({
+    checked: PropTypes.bool.isRequired,
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired
+  }),
+  toggleTodo: PropTypes.func.isRequired
 }
 
 export default Todo
