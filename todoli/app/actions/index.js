@@ -1,5 +1,4 @@
 export const ADD_TODO = 'ADD_TODO'
-export const DELETE_CHECKED_TODOS = 'DELETE_CHECKED_TODOS'
 export const DELETE_TODO = 'DELETE_TODO'
 export const RESET_TODOS = 'RESET_TODOS'
 export const TOGGLE_CHECKED_VISIBILITY = 'TOGGLE_CHECKED_VISIBILITY'
@@ -11,12 +10,6 @@ export const addTodo = (todo) => {
       todo
     },
     type: ADD_TODO
-  }
-}
-
-export const deleteCheckedTodos = () => {
-  return {
-    type: DELETE_CHECKED_TODOS
   }
 }
 

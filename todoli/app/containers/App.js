@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import {
   toggleCheckedVisibility,
-  deleteCheckedTodos,
   deleteTodo,
   resetTodos,
   toggleTodo
@@ -17,7 +16,6 @@ const mapStateToProps = ({ checkedVisibility, todos }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteCheckedTodos: () => dispatch(deleteCheckedTodos()),
     deleteTodo: (id) => dispatch(deleteTodo(id)),
     resetTodos: (todos) => dispatch(resetTodos(todos)),
     toggleCheckedVisibility: () => dispatch(toggleCheckedVisibility()),
