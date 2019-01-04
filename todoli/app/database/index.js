@@ -6,21 +6,6 @@ const TAG = 'DB'
 
 let database
 
-export const close = () => {
-  info(TAG, 'Closing DB...')
-
-  if (!database) {
-    info(TAG, "Can't find DB!")
-    return
-  }
-
-  return database.close()
-    .then(() => {
-      database = undefined
-      info(TAG, 'Database closed.')
-    })
-}
-
 export const createTodo = async (title) => {
   return open()
     .then(() => {
@@ -96,7 +81,22 @@ export const getAllTodos = async () => {
     })
 }
 
-export const open = async () => {
+const close = () => {
+  info(TAG, 'Closing DB...')
+
+  if (!database) {
+    info(TAG, "Can't find DB!")
+    return Promise.resolve()
+  }
+
+  return database.close()
+    .then(() => {
+      database = undefined
+      info(TAG, 'Database closed.')
+    })
+}
+
+const open = async () => {
   if (database) return Promise.resolve(database)
 
   SQLite.DEBUG(true)
