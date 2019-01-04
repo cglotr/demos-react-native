@@ -1,14 +1,16 @@
 import React from 'react'
 import { Button, View } from 'react-native'
-import { GOOGLE_RED } from '../constants/colors'
+import { GOOGLE_BLUE, GOOGLE_YELLOW } from '../constants/colors'
 
-const Footer = ({ deleteCheckedTodos }) => {
+const Footer = ({ checkedVisibility, toggleCheckedVisibility }) => {
+  const title = `${checkedVisibility ? 'Hide' : 'Show'} checked todos`
+
   return (
     <View>
       <Button
-        color={GOOGLE_RED}
-        onPress={() => { deleteCheckedTodos() }}
-        title='Remove completed todos'
+        color={checkedVisibility ? GOOGLE_YELLOW : GOOGLE_BLUE}
+        onPress={() => { toggleCheckedVisibility() }}
+        title={title}
       />
     </View>
   )

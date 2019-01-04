@@ -18,7 +18,14 @@ export default class extends Component {
   }
 
   render () {
-    const { deleteCheckedTodos, deleteTodo, todos, toggleTodo } = this.props
+    const {
+      checkedVisibility,
+      deleteCheckedTodos,
+      deleteTodo,
+      todos,
+      toggleCheckedVisibility,
+      toggleTodo
+    } = this.props
 
     return (
       <View style={{
@@ -42,6 +49,10 @@ export default class extends Component {
         }}>
           <ScrollView>
             {todos.map((todo) => {
+              if (!checkedVisibility && todo.checked) {
+                return null
+              }
+
               return (
                 <Todo
                   deleteTodo={deleteTodo}
@@ -57,7 +68,10 @@ export default class extends Component {
           alignItems: 'center',
           paddingBottom: PADDING * 2
         }}>
-          <Footer deleteCheckedTodos={deleteCheckedTodos} />
+          <Footer
+            checkedVisibility={checkedVisibility}
+            toggleCheckedVisibility={toggleCheckedVisibility}
+          />
         </View>
       </View>
     )

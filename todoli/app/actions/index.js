@@ -2,6 +2,7 @@ export const ADD_TODO = 'ADD_TODO'
 export const DELETE_CHECKED_TODOS = 'DELETE_CHECKED_TODOS'
 export const DELETE_TODO = 'DELETE_TODO'
 export const RESET_TODOS = 'RESET_TODOS'
+export const TOGGLE_CHECKED_VISIBILITY = 'TOGGLE_CHECKED_VISIBILITY'
 export const TOGGLE_TODO = 'TOGGLE_TODO'
 
 export const addTodo = (todo) => {
@@ -34,6 +35,12 @@ export const resetTodos = (todos) => {
       todos
     },
     type: RESET_TODOS
+  }
+}
+
+export const toggleCheckedVisibility = () => {
+  return {
+    type: TOGGLE_CHECKED_VISIBILITY
   }
 }
 
