@@ -2,7 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Text, View } from 'react-native'
 import { CheckBox, Icon } from 'react-native-elements'
-import { PADDING } from '../constants/dimensions'
+import { GOOGLE_RED } from '../constants/colors'
+import { PADDING, PADDING_SMALL } from '../constants/dimensions'
 import {
   deleteTodo as dbDeleteTodo,
   setTodoChecked
@@ -36,6 +37,11 @@ const Todo = ({ deleteTodo, todo, toggleTodo }) => {
       <View>
         <CheckBox
           checked={todo.checked}
+          containerStyle={{
+            paddingLeft: PADDING_SMALL,
+            paddingRight: PADDING,
+            paddingVertical: PADDING
+          }}
           onPress={() => handleCheckedPress(todo.id, !todo.checked)}
         />
       </View>
@@ -46,10 +52,12 @@ const Todo = ({ deleteTodo, todo, toggleTodo }) => {
         <Text>{todo.title}</Text>
       </View>
       <View style={{
-        paddingBottom: ALIGN_PADDING
+        paddingBottom: ALIGN_PADDING,
+        paddingRight: PADDING
       }}>
         <Icon
           name='delete-outline'
+          color={GOOGLE_RED}
           onPress={() => handleDeletePress(todo.id)}
           type='material-community'
         />
