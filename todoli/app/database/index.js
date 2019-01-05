@@ -12,27 +12,20 @@ export const createTodo = async (title) => {
       return database.executeSql('INSERT INTO todo (title) VALUES (?);', [title])
     })
     .then(([results]) => {
-      info(TAG, 'Created a new todo.')
       return results.insertId
     })
     .then((id) => {
-      info(TAG, 'Finding a todo with id =', id + '...')
       return database.executeSql('SELECT * FROM todo WHERE id = ?;', [id])
     })
     .then(([results]) => {
-      const todo = results.rows.item(0)
-      info(TAG, 'Found todo with id =', todo.id + '!')
-      return todo
+      return results.rows.item(0)
     })
     .then((todo) => {
-      close()
-
       const id = todo.id
       const title = todo.title
       const checked = !!todo.checked
 
-      info(TAG, 'Returning todo...')
-      info(TAG, 'todo:', todo)
+      close()
 
       return {
         id,
@@ -42,6 +35,7 @@ export const createTodo = async (title) => {
     })
     .catch(() => {
       close()
+      warn(TAG, 'Create todo failed!')
     })
 }
 
@@ -51,25 +45,22 @@ export const deleteTodo = async (id) => {
       return db.executeSql(`DELETE FROM todo WHERE id = ?;`, [id])
     })
     .then(() => {
+      close()
       return id
     })
     .catch(() => {
       close()
       warn(TAG, 'Delete todo failed!')
-      warn(TAG, 'Todo id =', id + '.')
     })
 }
 
 export const getAllTodos = async () => {
   return open()
     .then((db) => {
-      info(TAG, 'Finding all todos...')
       return db.executeSql(`SELECT * FROM todo;`)
     })
     .then(([results]) => {
       const len = results.rows.length
-      info(TAG, `Found ${len} todo(s)`)
-
       const todos = []
 
       for (let i = 0; i < len; i++) {
@@ -86,13 +77,13 @@ export const getAllTodos = async () => {
         })
       }
 
-      info(TAG, 'todos:', todos)
       close()
 
       return todos
     })
     .catch(() => {
       close()
+      warn(TAG, 'Failed to get all todos!')
     })
 }
 
@@ -111,7 +102,6 @@ export const setTodoChecked = async (id, checked) => {
     .catch(() => {
       close()
       warn(TAG, 'Set todo checked state failed!')
-      warn(TAG, 'Todo ID =', id + '.')
     })
 }
 
@@ -131,7 +121,12 @@ const close = () => {
 }
 
 const open = async () => {
-  if (database) return Promise.resolve(database)
+  info(TAG, 'Opening DB...')
+
+  if (database) {
+    info(TAG, 'Database is already opened.')
+    return Promise.resolve(database)
+  }
 
   SQLite.DEBUG(true)
   SQLite.enablePromise(true)
