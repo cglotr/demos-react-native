@@ -46,7 +46,10 @@ const todos = (state = init, action) => {
       return [ obj, ...state ]
     }
     case DELETE_TODO: {
-      if (!action.payload || !action.payload.id) return state
+      if (!action.payload || !action.payload.id) {
+        warn(TAG, 'Missing todo id in payload!')
+        return state
+      }
 
       const id = action.payload.id
 
@@ -55,12 +58,20 @@ const todos = (state = init, action) => {
       })
     }
     case RESET_TODOS: {
+      if (!action.payload || !action.payload.todos) {
+        warn(TAG, 'Missing todos in payload!')
+        return state
+      }
+
       const todos = action.payload.todos
 
       return todos.map(todo => todo)
     }
     case TOGGLE_TODO: {
-      if (!action.payload || !action.payload.id) return state
+      if (!action.payload || !action.payload.id) {
+        warn(TAG, 'Missing todo id in payload!')
+        return state
+      }
 
       const id = action.payload.id
 
